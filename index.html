@@ -1,33 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Дата следующего спринта</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <h2>Текст для Яндекс Трекера:</h2>
-    <p id="output"></p>
+<script>
+  function getNextSprintDate() {
+    const baseDate = new Date(2024, 5, 23); // 23 июня
+    const today = new Date();
+    let nextDate = new Date(baseDate);
+    while (nextDate <= today) nextDate.setDate(nextDate.getDate() + 14);
+    return nextDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+  }
 
-    <script>
-        // Вычисляем дату
-        const today = new Date();
-        const nextSprint = new Date(2024, 5, 23); // Старт первого спринта (23 июня)
-        
-        // Ищем ближайший будущий спринт
-        while (nextSprint <= today) {
-            nextSprint.setDate(nextSprint.getDate() + 14); // +2 недели
-        }
-        
-        // Форматируем дату
-        const formattedDate = nextSprint.toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'long'
-        });
-        
-        // Выводим готовый текст
-        document.getElementById('output').innerHTML = 
-            `Задачу заберем в работу со следующего спринта (${formattedDate}), ` +
-            `если задача срочная — нужно повысить приоритет до критического.`;
-    </script>
-</body>
-</html>
+  const response = {
+    description: {
+      set: `Задачу заберем в работу со следующего спринта (${getNextSprintDate()}), если задача срочная — нужно повысить приоритет до критического.`
+    }
+  };
+  document.write(JSON.stringify(response));
+</script>
